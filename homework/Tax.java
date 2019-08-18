@@ -28,7 +28,7 @@ public class Tax {
 	
 		tax = income * taxRate;
 		
-		System.out.printf("납부할 세금은"+tax+"입니다"); // %d 하니깐 안되요...
+		System.out.printf("납부할 세금은 %.1f",tax); // %d 하니깐 안되요...
 		
 		
 		
