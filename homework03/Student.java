@@ -136,91 +136,61 @@ public class Student {
 		return result;
 	}
 	
-	public String getRanking(double q, double w, double e) {
-		if (q<w) {
-	         if (q<e) {
-	            if (w<e) {
-	               //qwe
-	               String result = String.format("1등 : A 선수기록  %.f 초 \n 2등 : B 선수기록  %.f 초 \n 3등 : C 선수기록  %.f 초", q, w, e);
-	               return result;
-	            } else {
-	               //qew
-		           String result = String.format("1등 : A 선수기록  %.f 초 \n 2등 : C 선수기록  %.f 초 \n 3등 : B 선수기록  %.f 초", q, e, w);
-		           return result;
-	            }
-	         }
-	         else {
-	            //eqw
-		           String result = String.format("1등 : C 선수기록  %.f 초 \n 2등 : A 선수기록  %.f 초 \n 3등 : B 선수기록  %.f 초", w, e, q);
-		           return result;
-	         }
-	      } else if (w<q) {
-	         if (w<e) {
-	            if (q<e) {
-	               //wqe
-			           String result = String.format("1등 : B 선수기록  %.f 초 \n 2등 : A 선수기록  %.f 초 \n 3등 : C 선수기록  %.f 초", w, q, e);
-			           return result;
-	            }else {
-	               //weq
-			           String result = String.format("1등 : B 선수기록  %.f 초 \n 2등 : C 선수기록  %.f 초 \n 3등 : A 선수기록  %.f 초", w, e, q);
-			           return result;
-	            }
-	         }
-	         else {
-	            //cba
-		           String result = String.format("1등 : C 선수기록  %.f 초 \n 2등 : B 선수기록  %.f 초 \n 3등 : A 선수기록  %.f 초", e, w, q);
-		           return result;
-	         }
-	      }
-		return null;
-	
-	}
-	public String getScoreCalc(String[] arry) {
-		int num = Integer.parseInt(arry[0]);
-		int  Acc= Integer.parseInt(arry[1]) ,loop = Integer.parseInt(arry[2]);
-		String AccString= arry[3];
-		
-		
-			if (arry[0].equals("-1")) {
-				AccString = AccString.substring(0, AccString.length()-1);
-				String result = String.format("현재까지의 누적값은 %s = %d점 이고, 평균은 %d점 입니다.", AccString , Acc , Acc/loop);
-				return result;
-			} else {
-				String result;
+	public String getRank( double[] records) {
+		for(int i = 0; i < records.length; i++) {
+			for(int j = 0 ; j < records.length -1; j++) {
+				if(records[j] > records[j+1]) {
+					double tempd = records[j];
+					records[j] = records[j+1];
+					records[j+1] = tempd;
+											
+					
+				}
 			}
-			return AccString;
+		}
+		String result ="";
+		for(int i = 0 ;i < 3; i++) {
+			 result += String.format("%d등 기록 : %.1f \n" , i+1, records[i] );
+		}
+		
+		return result;
+	}
+	
+	public String getScoreCalc(int[] numbers) {
+		int sum = 0;
+		String result ="";
+		for(int i = 0 ; i< numbers.length; i++) {
 			
+			sum += numbers[i] ;
+		}
+		int avg = sum / numbers.length;
+		for(int i = 0 ; i < numbers.length; i++) {
+			if(i == numbers.length-1) {
+				 result += numbers[i] + "=";
+			}else {
+				result += numbers[i] + "+";
+			}
+		}
+		result += String.format("%d이고 평균은 %d입니다.", sum , avg);
+		
+		return result;
 	}
 
-	public String getTax(String name, double income) {
-
-				double rate = 9.7d;
-
-				double tax = income * (rate*0.01);
-
-				String result = String.format("연봉 %.0f만원을 받으시는 %s님께서 납부할 세금은 %.0f만원입니다.", income, name, tax);
-				return result;
-
+	public String getTax(String name, int income ) {
+		double tax = income * (9.7 / 100.0);
+		
+		String result = String.format("연봉 %d만원을 받는 %s님의 세금은 %.1f만원 입니다.", income, name, tax);
+		return result;
 	}
-
-	public String getTimeCalc(int num) {
-		int  ss =0, mm = 0, hh =0, temp=0 ;
-
-		// 초 구하기
-		ss = num % 60 ;
-		temp = num / 60 ; 
-
-		//분 구하기
-		mm = temp % 60 ;
-		temp = temp / 60 ;
-
-		// 시간 구하기 
-		hh = temp;
-
-		String result = String.format("입력하신 초단위 %d는 %d시간 %d분 %d초 입니다. ", num, hh, mm, ss);
-		return result ;
-
+	public String getTimeCalc(int time) {
+		int min = time/ 60;
+		int hour = (time/60) /60;
+		int sec = time%60;
+		String result = String.format("%d시간 %d분 %d초", hour, min, sec);
+		
+		
+		return result;
 	}
-
+	
 	
 }	

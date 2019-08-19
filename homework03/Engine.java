@@ -9,7 +9,7 @@ public class Engine {
 		Student student = new Student();
 		
 		while(true) {
-			System.out.println("0.종료 1.사칙연산 2.BMI 3.HowMuch 4.Join 5.LeapYear 6.MonthEndDay 7.PassOrFail 8.Ranking 9.ReportCard 10.ScaoreCalc 11.Tax 12.TimeCalc");
+			System.out.println("0.종료 1.사칙연산 2.BMI 3.HowMuch 4.Join 5.LeapYear 6.MonthEndDay 7.PassOrFail 8.Ranking 9.ScaoreCalc 10.Tax 11.TimeCalc");
 			switch(scanner.nextInt()) {
 			case 0 : ; return;
 			case 1:
@@ -117,60 +117,64 @@ public class Engine {
 				
 			break;
 			case 8:
-			      System.out.println("A 선수의 기록을 입력하세요");
-			      double q = scanner.nextDouble();
-			      System.out.println("B 선수의 기록을 입력하세요");
-			      double w = scanner.nextDouble();
-			      System.out.println("C 선수의 기록을 입력하세요");
-			      double e = scanner.nextDouble();
-			      
-			      result = student.getRanking(q, w, e);
-			      System.out.println(result);
-			      
-			
+				double[] records = new double[3];
+				System.out.println("기록측정");
+				System.out.print("시간입력>");
+				for(int i = 0; i < 3; i++) {
+					records[i] = scanner.nextDouble();
+				}
+				result = student.getRank(records);
+				
+				System.out.println(result);
+
 			break;
 			case 9:
-				 System.out.println("ScoreCalc");
-					String [] arry = {"0","0","0",""};
-					while (true) {
-						System.out.println("더하시려는 숫자를 입력하세요(종료는 -1)");
-						arry[0] = scanner.next();
-						
-						switch (arry[0]) {
-						case "-1":
-							result =	 student.getScoreCalc(arry);
-							System.out.println(result);
-							return;
-						default :
-							arry[1] = String.valueOf(Integer.parseInt(arry[1]) +Integer.parseInt(arry[0])) ;
-							arry[3] += arry[0] + "+";
-							arry[2] =String.valueOf(Integer.parseInt(arry[2]) +1) ;
-							break;
-						}
-						result =	 student.getScoreCalc(arry);
+				int count = 0;
+				int[] numbers = null;
+				while(true) {
+					
+					System.out.println("숫자입력 (-1종료)");
+					int sc = scanner.nextInt();
+					if(sc == -1) {
+						break;
 					}
-		
+					int[] temp = new int[count];
+					for(int i = 0; i < count ; i++) {
+						temp[i] = numbers[i];
+						
+					}
+					count ++;
+					numbers = new int[count];
+					for(int i = 0 ;i <count-1 ; i++) {
+						numbers[i] = temp[i];
+						
+					}
+					numbers[count-1] = sc;
+					
+					
+				}
+				result = student.getScoreCalc(numbers);
+				
+				
+				
+				System.out.println(result);
 			
 			case 10:
-				System.out.println("Tax"); 
-				System.out.println(">>> 성함과 연봉을 순서대로 입력하세요    :   ");
-				String user = scanner.next();
-				double income = scanner.nextDouble();
-				
-				
-				result = student.getTax(user, income);
-				System.out.println(result);		
-			
+				System.out.println("세금계산기");
+				System.out.println("이름>");
+				name = scanner.next();
+				System.out.println("연봉>");
+				int income = scanner.nextInt();
+				result = student.getTax(name, income);
+				System.out.println(result);
 			break;
 			
 			case 11:
-				System.out.println("TimeCalc"); 
-				int num =0;
-	
-				System.out.print(">>>>>>계산하고 싶은 초단위를 입력하세요   : ");
-				num = scanner.nextInt();
-	
-				result =student.getTimeCalc(num);
+				System.out.println("시간계산기");
+				System.out.println("시간입력:");
+				int time = scanner.nextInt();
+				result = student.getTimeCalc(time);
+				
 				System.out.println(result);
 			
 			break;
